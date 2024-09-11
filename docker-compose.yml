@@ -1,0 +1,23 @@
+version: '2'
+
+volumes:
+  pg_storage:
+
+services:
+  storage_app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - storage_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://storage_db:5432/storage_db
+
+  storage_db:
+    image: 'postgres:16'
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=storage_db
+    ports:
+      - "5432:5432"
